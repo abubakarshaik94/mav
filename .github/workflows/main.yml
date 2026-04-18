@@ -1,10 +1,20 @@
-name: First Action
+name: Check HTML File
 
 on: [push]
 
 jobs:
-  say-hello:
+  check-html:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Print message
-        run: echo "Hello, GitHub Actions is working!"
+      - name: Download code
+        uses: actions/checkout@v4
+
+      - name: Check if index.html exists
+        run: |
+          if [ -f index.html ]; then
+            echo "index.html found ✅"
+          else
+            echo "index.html NOT found ❌"
+            exit 1
+          fi
